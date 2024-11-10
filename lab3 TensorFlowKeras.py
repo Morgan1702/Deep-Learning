@@ -18,9 +18,9 @@ test_labels = tf.keras.utils.to_categorical(test_labels, 10)
 # Створення моделі LeNet-5
 lenet_model = Sequential([
     layers.Conv2D(6, (5, 5), activation='tanh', input_shape=(28, 28, 1), padding='same'),
-    layers.AveragePooling2D(),
+    layers.AveragePooling2D(pool_size=(2, 2)),  # Додано pool_size для AveragePooling2D
     layers.Conv2D(16, (5, 5), activation='tanh'),
-    layers.AveragePooling2D(),
+    layers.AveragePooling2D(pool_size=(2, 2)),  # Додано pool_size для AveragePooling2D
     layers.Conv2D(120, (5, 5), activation='tanh'),
     layers.Flatten(),
     layers.Dense(84, activation='tanh'),
