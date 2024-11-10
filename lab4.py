@@ -8,13 +8,13 @@ from tensorflow.keras.datasets import cifar10
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 x_train, x_test = x_train / 255.0, x_test / 255.0
 
-# Визначення архітектури мережі AlexNet
+# Визначення архітектури мережі AlexNet з урахуванням розміру CIFAR-10
 def create_alexnet():
     model = models.Sequential([
         layers.Conv2D(96, (3, 3), strides=(1, 1), activation='relu', input_shape=(32, 32, 3)),
         layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
         
-        layers.Conv2D(256, (5, 5), activation='relu'),
+        layers.Conv2D(256, (3, 3), activation='relu'),
         layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
         
         layers.Conv2D(384, (3, 3), activation='relu'),
@@ -58,6 +58,9 @@ for i in range(num_images):
     img = x_test[i]
     plt.imshow(img, cmap=plt.cm.binary)
     true_label = class_names[y_test[i][0]]
-    predicted_label = class_names[np.argmax(model.predict(np.expand_dims(img, axis=0)))]
+    
+    # Корекція прогнозу зображення
+    predicted_label = class_names[np.argmax(model.predict(np.expand_dims(img, axis=0)), axis=1)[0]]
+    
     plt.xlabel(f"Істинно: {true_label}\nПрогноз: {predicted_label}")
 plt.show()
