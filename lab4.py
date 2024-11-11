@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import layers, models
-import numpy as np
+import numpy as np 
 import matplotlib.pyplot as plt
 from tensorflow.keras.datasets import cifar10
 
@@ -13,19 +13,19 @@ def create_alexnet():
     model = models.Sequential([
         layers.Conv2D(96, (3, 3), strides=(1, 1), activation='relu', input_shape=(32, 32, 3)),
         layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-        
+
         layers.Conv2D(256, (3, 3), activation='relu'),
         layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-        
-        layers.Conv2D(384, (3, 3), activation='relu'),
-        layers.Conv2D(384, (3, 3), activation='relu'),
+
+        layers.Conv2D(384, (3, 3), activation='relu', padding='same'),
+        layers.Conv2D(384, (3, 3), activation='relu', padding='same'),
         layers.Conv2D(256, (3, 3), activation='relu'),
         layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-        
+
         layers.Flatten(),
-        layers.Dense(4096, activation='relu'),
+        layers.Dense(1024, activation='relu'),  # Зменшений розмір через обмеження CIFAR-10
         layers.Dropout(0.5),
-        layers.Dense(4096, activation='relu'),
+        layers.Dense(1024, activation='relu'),
         layers.Dropout(0.5),
         layers.Dense(10, activation='softmax')
     ])
